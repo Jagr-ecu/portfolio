@@ -100,9 +100,11 @@ export const categoriasSkills: CategoriaSkill[] = [
 ];
 
 // ─── PROYECTOS ──────────────────────────────────────────────────
-// Las imágenes se agregarán después. `imagenes` queda vacío por ahora
-// y se muestra un placeholder. Cuando tengas capturas, ponlas en
-// /public/proyectos/<slug>/ y añade las rutas al array.
+// Las imágenes viven en /public/proyectos/<slug>/. En `src` se pone
+// la ruta relativa a /public (sin el base); el componente le añade
+// el base automáticamente. La primera imagen es la portada.
+
+export type Imagen = { src: string; caption: string };
 
 export type Proyecto = {
   slug: string;
@@ -114,7 +116,7 @@ export type Proyecto = {
   tipo: string; // etiqueta visible (ej. "Full-Stack", "Frontend + Serverless")
   repo: string;
   demo?: string; // solo si tiene demo en vivo
-  imagenes: string[]; // vacío = placeholder
+  imagenes: Imagen[]; // vacío = placeholder
 };
 
 export const proyectos: Proyecto[] = [
@@ -146,7 +148,16 @@ export const proyectos: Proyecto[] = [
       'MobX',
     ],
     repo: 'https://github.com/Jagr-ecu',
-    imagenes: [],
+    imagenes: [
+      { src: 'proyectos/reactivities/01-chat-tiempo-real.gif', caption: 'Chat en tiempo real dentro de una actividad (SignalR)' },
+      { src: 'proyectos/reactivities/06-home.jpg', caption: 'Página de inicio' },
+      { src: 'proyectos/reactivities/02-dashboard-filtros.jpg', caption: 'Dashboard de actividades con filtros y calendario' },
+      { src: 'proyectos/reactivities/03-detalle-asistentes.jpg', caption: 'Detalle de una actividad con sus asistentes' },
+      { src: 'proyectos/reactivities/07-crear-actividad.jpg', caption: 'Formulario de creación de actividad' },
+      { src: 'proyectos/reactivities/04-perfil-sobre.jpg', caption: 'Perfil de usuario' },
+      { src: 'proyectos/reactivities/04b-perfil-seguidores.jpg', caption: 'Sistema de seguidores' },
+      { src: 'proyectos/reactivities/05-perfil-fotos.jpg', caption: 'Galería de fotos del perfil' },
+    ],
   },
   {
     slug: 'clothes-store',
@@ -176,7 +187,15 @@ export const proyectos: Proyecto[] = [
     ],
     repo: 'https://github.com/Jagr-ecu',
     // demo: 'https://...', // TODO: añadir si se redespliega en Netlify
-    imagenes: [],
+    imagenes: [
+      { src: 'proyectos/clothes-store/00-flujo-compra.gif', caption: 'Flujo de compra completo, de principio a fin' },
+      { src: 'proyectos/clothes-store/01-home.jpg', caption: 'Inicio con las categorías de productos' },
+      { src: 'proyectos/clothes-store/02-shop-categorias.jpg', caption: 'Vista de tienda con todas las categorías' },
+      { src: 'proyectos/clothes-store/03-categoria-chaquetas.jpg', caption: 'Catálogo de una categoría (chaquetas)' },
+      { src: 'proyectos/clothes-store/04-carrito-dropdown.jpg', caption: 'Carrito de compras desplegable' },
+      { src: 'proyectos/clothes-store/05-checkout-total.jpg', caption: 'Checkout con el total de la compra' },
+      { src: 'proyectos/clothes-store/06-autenticacion.jpg', caption: 'Autenticación de usuarios (Firebase)' },
+    ],
   },
 ];
 

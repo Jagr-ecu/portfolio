@@ -23,3 +23,6 @@ Thumbs.db
 
 # Datos personales (CV con teléfonos propios y de referencias) — no publicar
 Informacion/
+
+# Originales de las capturas (las copias servidas viven en public/proyectos/)
+assets/
