@@ -1,0 +1,160 @@
+---
+import { perfil } from '../data/portfolio';
+const iniciales = perfil.nombre
+  .split(' ')
+  .slice(0, 2)
+  .map((p) => p[0])
+  .join('');
+---
+
+<header class="nav" id="nav">
+  <div class="container nav-inner">
+    <a href="#inicio" class="brand">{iniciales}</a>
+
+    <nav class="links" id="nav-links">
+      <a href="#sobre-mi">Sobre mí</a>
+      <a href="#skills">Skills</a>
+      <a href="#proyectos">Proyectos</a>
+      <a href="#experiencia">Experiencia</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+
+    <div class="nav-actions">
+      <button id="theme-toggle" class="icon-btn" aria-label="Cambiar tema">
+        <span class="sun">☀️</span>
+        <span class="moon">🌙</span>
+      </button>
+      <button id="menu-toggle" class="icon-btn menu-btn" aria-label="Menú">☰</button>
+    </div>
+  </div>
+</header>
+
+<style>
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: color-mix(in srgb, var(--bg) 82%, transparent);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+  }
+  .brand {
+    font-weight: 800;
+    font-size: 1.15rem;
+    letter-spacing: 0.05em;
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    color: #fff;
+    background: var(--gradient);
+  }
+  .links {
+    display: flex;
+    gap: 1.6rem;
+  }
+  .links a {
+    color: var(--text-soft);
+    font-weight: 500;
+    font-size: 0.95rem;
+    position: relative;
+    transition: color 0.2s;
+  }
+  .links a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 0;
+    height: 2px;
+    background: var(--gradient);
+    transition: width 0.25s;
+  }
+  .links a:hover {
+    color: var(--text);
+  }
+  .links a:hover::after {
+    width: 100%;
+  }
+  .nav-actions {
+    display: flex;
+    gap: 0.5rem;
+  }
+  .icon-btn {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: var(--bg-elev);
+    cursor: pointer;
+    font-size: 1.1rem;
+    display: grid;
+    place-items: center;
+    color: var(--text);
+    transition: transform 0.15s, border-color 0.2s;
+  }
+  .icon-btn:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent);
+  }
+  .menu-btn {
+    display: none;
+  }
+  :root[data-theme='dark'] .sun {
+    display: none;
+  }
+  :root[data-theme='light'] .moon {
+    display: none;
+  }
+
+  @media (max-width: 760px) {
+    .links {
+      position: absolute;
+      top: 64px;
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      gap: 0;
+      background: var(--bg-elev);
+      border-bottom: 1px solid var(--border);
+      padding: 0.5rem 0;
+      transform: translateY(-140%);
+      transition: transform 0.3s;
+    }
+    .links.open {
+      transform: translateY(0);
+    }
+    .links a {
+      padding: 0.8rem 6vw;
+    }
+    .menu-btn {
+      display: grid;
+    }
+  }
+</style>
+
+<script>
+  // Toggle de tema
+  const toggle = document.getElementById('theme-toggle');
+  toggle?.addEventListener('click', () => {
+    const root = document.documentElement;
+    const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+    root.dataset.theme = next;
+    localStorage.setItem('theme', next);
+  });
+
+  // Menú móvil
+  const menuBtn = document.getElementById('menu-toggle');
+  const links = document.getElementById('nav-links');
+  menuBtn?.addEventListener('click', () => links?.classList.toggle('open'));
+  links?.querySelectorAll('a').forEach((a) =>
+    a.addEventListener('click', () => links.classList.remove('open'))
+  );
+</script>

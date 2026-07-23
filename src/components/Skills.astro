@@ -1,0 +1,125 @@
+---
+import { categoriasSkills } from '../data/portfolio';
+---
+
+<section id="skills" class="skills-section">
+  <div class="container">
+    <h2 class="section-title reveal">Mis <span class="accent">skills</span></h2>
+    <p class="section-subtitle reveal">
+      Tecnologías con las que trabajo, agrupadas por área. El nivel es orientativo.
+    </p>
+
+    <div class="cats">
+      {
+        categoriasSkills.map((cat) => (
+          <article class="card reveal" style={`--cat: ${cat.color}`}>
+            <header>
+              <span class="ico">{cat.icono}</span>
+              <h3>{cat.titulo}</h3>
+            </header>
+            <ul>
+              {cat.skills.map((s) => (
+                <li>
+                  <div class="row">
+                    <span class="name">{s.nombre}</span>
+                    <span class="lvl">{s.nivel}/5</span>
+                  </div>
+                  <div class="track">
+                    <div class="fill" data-width={`${(s.nivel / 5) * 100}%`} />
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .skills-section {
+    background: var(--bg-soft);
+  }
+  .cats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+  .card {
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 1.6rem 1.7rem;
+    box-shadow: var(--shadow);
+    border-top: 4px solid var(--cat);
+  }
+  header {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    margin-bottom: 1.3rem;
+  }
+  .ico {
+    font-size: 1.5rem;
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--cat) 16%, transparent);
+  }
+  h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+  }
+  ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.95rem;
+  }
+  .row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.35rem;
+    font-size: 0.92rem;
+  }
+  .name {
+    font-weight: 500;
+  }
+  .lvl {
+    color: var(--text-faint);
+    font-variant-numeric: tabular-nums;
+  }
+  .track {
+    height: 8px;
+    border-radius: 999px;
+    background: var(--bg-soft);
+    overflow: hidden;
+  }
+  .fill {
+    height: 100%;
+    width: 0;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--cat), color-mix(in srgb, var(--cat) 60%, #fff));
+    transition: width 1s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+</style>
+
+<script>
+  // Anima las barras cuando la tarjeta entra en pantalla
+  const obs = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((e) => {
+        if (!e.isIntersecting) return;
+        e.target.querySelectorAll<HTMLElement>('.fill').forEach((el) => {
+          el.style.width = el.dataset.width || '0';
+        });
+        obs.unobserve(e.target);
+      });
+    },
+    { threshold: 0.3 }
+  );
+  document.querySelectorAll('#skills .card').forEach((c) => obs.observe(c));
+</script>

@@ -1,0 +1,141 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+}
+const { title, description = 'Portfolio de Jubert Goya — Desarrollador de Software' } = Astro.props;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}/favicon.svg`.replace('//', '/')} />
+    <title>{title}</title>
+    <!-- Evita el parpadeo de tema: se aplica antes de pintar -->
+    <script is:inline>
+      const t = localStorage.getItem('theme');
+      const dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+      document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+    </script>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
+
+<style is:global>
+  :root {
+    --bg: #f8fafc;
+    --bg-elev: #ffffff;
+    --bg-soft: #f1f5f9;
+    --text: #0f172a;
+    --text-soft: #475569;
+    --text-faint: #94a3b8;
+    --border: #e2e8f0;
+    --accent: #6366f1;
+    --accent-2: #a855f7;
+    --accent-3: #ec4899;
+    --shadow: 0 10px 30px -12px rgba(15, 23, 42, 0.15);
+    --gradient: linear-gradient(120deg, #6366f1, #a855f7, #ec4899);
+  }
+
+  :root[data-theme='dark'] {
+    --bg: #0b1020;
+    --bg-elev: #131a2e;
+    --bg-soft: #1b2338;
+    --text: #e8ecf6;
+    --text-soft: #a9b4cc;
+    --text-faint: #6b7799;
+    --border: #26304b;
+    --accent: #818cf8;
+    --accent-2: #c084fc;
+    --accent-3: #f472b6;
+    --shadow: 0 20px 45px -20px rgba(0, 0, 0, 0.7);
+    --gradient: linear-gradient(120deg, #818cf8, #c084fc, #f472b6);
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px;
+  }
+
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, 'Helvetica Neue', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    transition: background 0.3s, color 0.3s;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  img {
+    max-width: 100%;
+    display: block;
+  }
+
+  .container {
+    width: min(1100px, 92vw);
+    margin-inline: auto;
+  }
+
+  section {
+    padding: clamp(3.5rem, 8vw, 6.5rem) 0;
+  }
+
+  .section-title {
+    font-size: clamp(1.7rem, 4vw, 2.4rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+  }
+
+  .section-title .accent {
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .section-subtitle {
+    color: var(--text-soft);
+    margin-bottom: 2.5rem;
+    max-width: 55ch;
+  }
+
+  /* Animación de aparición al hacer scroll */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+    html {
+      scroll-behavior: auto;
+    }
+  }
+</style>
