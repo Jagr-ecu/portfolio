@@ -104,7 +104,7 @@ export const categoriasSkills: CategoriaSkill[] = [
 // la ruta relativa a /public (sin el base); el componente le añade
 // el base automáticamente. La primera imagen es la portada.
 
-export type Imagen = { src: string; caption: string };
+export type Imagen = { src: string; caption: string; captionEn: string };
 
 export type Proyecto = {
   slug: string;
@@ -149,14 +149,14 @@ export const proyectos: Proyecto[] = [
     ],
     repo: 'https://github.com/Jagr-ecu',
     imagenes: [
-      { src: 'proyectos/reactivities/01-chat-tiempo-real.gif', caption: 'Chat en tiempo real dentro de una actividad (SignalR)' },
-      { src: 'proyectos/reactivities/06-home.jpg', caption: 'Página de inicio' },
-      { src: 'proyectos/reactivities/02-dashboard-filtros.jpg', caption: 'Dashboard de actividades con filtros y calendario' },
-      { src: 'proyectos/reactivities/03-detalle-asistentes.jpg', caption: 'Detalle de una actividad con sus asistentes' },
-      { src: 'proyectos/reactivities/07-crear-actividad.jpg', caption: 'Formulario de creación de actividad' },
-      { src: 'proyectos/reactivities/04-perfil-sobre.jpg', caption: 'Perfil de usuario' },
-      { src: 'proyectos/reactivities/04b-perfil-seguidores.jpg', caption: 'Sistema de seguidores' },
-      { src: 'proyectos/reactivities/05-perfil-fotos.jpg', caption: 'Galería de fotos del perfil' },
+      { src: 'proyectos/reactivities/01-chat-tiempo-real.gif', caption: 'Chat en tiempo real dentro de una actividad (SignalR)', captionEn: 'Real-time chat inside an activity (SignalR)' },
+      { src: 'proyectos/reactivities/06-home.jpg', caption: 'Página de inicio', captionEn: 'Home page' },
+      { src: 'proyectos/reactivities/02-dashboard-filtros.jpg', caption: 'Dashboard de actividades con filtros y calendario', captionEn: 'Activity dashboard with filters and calendar' },
+      { src: 'proyectos/reactivities/03-detalle-asistentes.jpg', caption: 'Detalle de una actividad con sus asistentes', captionEn: 'Activity detail with its attendees' },
+      { src: 'proyectos/reactivities/07-crear-actividad.jpg', caption: 'Formulario de creación de actividad', captionEn: 'Activity creation form' },
+      { src: 'proyectos/reactivities/04-perfil-sobre.jpg', caption: 'Perfil de usuario', captionEn: 'User profile' },
+      { src: 'proyectos/reactivities/04b-perfil-seguidores.jpg', caption: 'Sistema de seguidores', captionEn: 'Followers system' },
+      { src: 'proyectos/reactivities/05-perfil-fotos.jpg', caption: 'Galería de fotos del perfil', captionEn: 'Profile photo gallery' },
     ],
   },
   {
@@ -188,13 +188,13 @@ export const proyectos: Proyecto[] = [
     repo: 'https://github.com/Jagr-ecu',
     // demo: 'https://...', // TODO: añadir si se redespliega en Netlify
     imagenes: [
-      { src: 'proyectos/clothes-store/00-flujo-compra.gif', caption: 'Flujo de compra completo, de principio a fin' },
-      { src: 'proyectos/clothes-store/01-home.jpg', caption: 'Inicio con las categorías de productos' },
-      { src: 'proyectos/clothes-store/02-shop-categorias.jpg', caption: 'Vista de tienda con todas las categorías' },
-      { src: 'proyectos/clothes-store/03-categoria-chaquetas.jpg', caption: 'Catálogo de una categoría (chaquetas)' },
-      { src: 'proyectos/clothes-store/04-carrito-dropdown.jpg', caption: 'Carrito de compras desplegable' },
-      { src: 'proyectos/clothes-store/05-checkout-total.jpg', caption: 'Checkout con el total de la compra' },
-      { src: 'proyectos/clothes-store/06-autenticacion.jpg', caption: 'Autenticación de usuarios (Firebase)' },
+      { src: 'proyectos/clothes-store/00-flujo-compra.gif', caption: 'Flujo de compra completo, de principio a fin', captionEn: 'Full purchase flow, start to finish' },
+      { src: 'proyectos/clothes-store/01-home.jpg', caption: 'Inicio con las categorías de productos', captionEn: 'Home with the product categories' },
+      { src: 'proyectos/clothes-store/02-shop-categorias.jpg', caption: 'Vista de tienda con todas las categorías', captionEn: 'Shop view with every category' },
+      { src: 'proyectos/clothes-store/03-categoria-chaquetas.jpg', caption: 'Catálogo de una categoría (chaquetas)', captionEn: 'Single-category catalog (jackets)' },
+      { src: 'proyectos/clothes-store/04-carrito-dropdown.jpg', caption: 'Carrito de compras desplegable', captionEn: 'Cart dropdown' },
+      { src: 'proyectos/clothes-store/05-checkout-total.jpg', caption: 'Checkout con el total de la compra', captionEn: 'Checkout with the order total' },
+      { src: 'proyectos/clothes-store/06-autenticacion.jpg', caption: 'Autenticación de usuarios (Firebase)', captionEn: 'User authentication (Firebase)' },
     ],
   },
 ];

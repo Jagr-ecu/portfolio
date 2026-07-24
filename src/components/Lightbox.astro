@@ -1,0 +1,240 @@
+---
+// Visor a pantalla completa para las capturas. Se abre con cualquier
+// elemento que tenga [data-gallery] + [data-index] (ver ProjectFigure.astro).
+import { proyectos } from '../data/portfolio';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const url = (src: string) => `${base}/${src}`;
+
+const galerias = Object.fromEntries(
+  proyectos.map((p) => [
+    p.slug,
+    p.imagenes.map((i) => ({ src: url(i.src), es: i.caption, en: i.captionEn })),
+  ])
+);
+---
+
+<div class="lb" id="lightbox" role="dialog" aria-modal="true" hidden>
+  <div class="lb-bar">
+    <span class="lb-count" id="lb-count"></span>
+    <button class="lb-btn" type="button" id="lb-close">
+      <span aria-hidden="true">✕</span>
+      <span class="sr-only"><span class="es-only">Cerrar</span><span class="en-only">Close</span></span>
+    </button>
+  </div>
+
+  <figure class="lb-fig">
+    <img id="lb-img" src="" alt="" />
+    <figcaption class="lb-cap">
+      <span class="es-only" id="lb-cap-es"></span><span class="en-only" id="lb-cap-en"></span>
+    </figcaption>
+  </figure>
+
+  <button class="lb-btn lb-nav lb-prev" type="button" id="lb-prev">
+    <span aria-hidden="true">←</span>
+    <span class="sr-only"><span class="es-only">Anterior</span><span class="en-only">Previous</span></span>
+  </button>
+
+  <button class="lb-btn lb-nav lb-next" type="button" id="lb-next">
+    <span aria-hidden="true">→</span>
+    <span class="sr-only"><span class="es-only">Siguiente</span><span class="en-only">Next</span></span>
+  </button>
+</div>
+
+<script is:inline set:html={`window.__galerias = ${JSON.stringify(galerias)};`}></script>
+
+<style>
+  /* El overlay es la referencia de posición de TODO el cromo (contador,
+     cerrar, flechas y pie). Así nada se mueve cuando cambia la imagen:
+     el único elemento de tamaño variable es la propia captura. */
+  .lb {
+    position: fixed;
+    inset: 0;
+    z-index: 90;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(56px, 8vh, 88px) clamp(62px, 9vw, 120px) clamp(58px, 9vh, 92px);
+    background: rgba(23, 19, 15, 0.94);
+  }
+  .lb[hidden] {
+    display: none;
+  }
+
+  .lb-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: clamp(12px, 2vw, 20px) clamp(14px, 4vw, 48px);
+  }
+  .lb-count {
+    font-size: 11.5px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-variant-numeric: tabular-nums;
+    color: rgba(245, 242, 236, 0.6);
+  }
+
+  .lb-btn {
+    appearance: none;
+    width: 44px;
+    height: 44px;
+    flex: none;
+    display: grid;
+    place-items: center;
+    padding: 0;
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1;
+    color: var(--paper);
+    background: transparent;
+    border: 1px solid rgba(245, 242, 236, 0.28);
+    cursor: pointer;
+    transition: background 0.18s ease, border-color 0.18s ease;
+  }
+  .lb-btn:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+  .lb-btn:focus-visible {
+    outline: 2px solid var(--paper);
+    outline-offset: 3px;
+  }
+
+  /* flechas ancladas al overlay, no a la imagen */
+  .lb-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .lb-prev {
+    left: clamp(10px, 2vw, 34px);
+  }
+  .lb-next {
+    right: clamp(10px, 2vw, 34px);
+  }
+
+  .lb-fig {
+    margin: 0;
+    min-width: 0;
+    max-width: 100%;
+    max-height: 100%;
+    display: flex;
+  }
+  .lb-fig img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border: 1px solid rgba(245, 242, 236, 0.18);
+    background: var(--ink);
+  }
+
+  /* el pie sale del flujo: crece hacia arriba y no empuja la imagen.
+     pointer-events:none para que hacer clic ahí siga cerrando el visor. */
+  .lb-cap {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: clamp(18px, 3vh, 30px);
+    padding: 0 clamp(62px, 9vw, 120px);
+    margin: 0 auto;
+    pointer-events: none;
+    font-size: 12.5px;
+    letter-spacing: 0.04em;
+    text-align: center;
+    color: rgba(245, 242, 236, 0.78);
+  }
+
+  @media (max-width: 720px) {
+    .lb {
+      padding: 52px 14px 104px;
+    }
+    /* en móvil las flechas bajan a una barra fija, siempre en el mismo sitio */
+    .lb-nav {
+      top: auto;
+      bottom: 18px;
+      transform: none;
+    }
+    .lb-prev {
+      left: calc(50% - 50px);
+    }
+    .lb-next {
+      right: calc(50% - 50px);
+    }
+    .lb-cap {
+      bottom: 74px;
+      padding: 0 14px;
+    }
+  }
+</style>
+
+<script>
+  type Item = { src: string; es: string; en: string };
+
+  const lb = document.getElementById('lightbox') as HTMLElement | null;
+  const lbImg = document.getElementById('lb-img') as HTMLImageElement | null;
+  const capEs = document.getElementById('lb-cap-es');
+  const capEn = document.getElementById('lb-cap-en');
+  const count = document.getElementById('lb-count');
+  const galerias = ((window as any).__galerias ?? {}) as Record<string, Item[]>;
+
+  if (lb && lbImg) {
+    let actual: Item[] = [];
+    let idx = 0;
+    let previo: HTMLElement | null = null;
+
+    const render = () => {
+      const item = actual[idx];
+      if (!item) return;
+      lbImg.src = item.src;
+      lbImg.alt = document.documentElement.classList.contains('lang-en') ? item.en : item.es;
+      if (capEs) capEs.textContent = item.es;
+      if (capEn) capEn.textContent = item.en;
+      if (count) count.textContent = `${idx + 1} / ${actual.length}`;
+    };
+
+    const abrir = (slug: string, i: number) => {
+      actual = galerias[slug] ?? [];
+      if (!actual.length) return;
+      idx = i;
+      render();
+      previo = document.activeElement as HTMLElement | null;
+      lb.hidden = false;
+      document.body.style.overflow = 'hidden';
+      (document.getElementById('lb-close') as HTMLElement | null)?.focus();
+    };
+
+    const cerrar = () => {
+      lb.hidden = true;
+      document.body.style.overflow = '';
+      previo?.focus();
+    };
+
+    const mover = (paso: number) => {
+      idx = (idx + paso + actual.length) % actual.length;
+      render();
+    };
+
+    document.querySelectorAll<HTMLElement>('[data-gallery]').forEach((el) => {
+      el.addEventListener('click', () => abrir(el.dataset.gallery!, Number(el.dataset.index || 0)));
+    });
+
+    document.getElementById('lb-close')?.addEventListener('click', cerrar);
+    document.getElementById('lb-prev')?.addEventListener('click', () => mover(-1));
+    document.getElementById('lb-next')?.addEventListener('click', () => mover(1));
+    lb.addEventListener('click', (e) => {
+      if (e.target === lb) cerrar();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (lb.hidden) return;
+      if (e.key === 'Escape') cerrar();
+      if (e.key === 'ArrowLeft') mover(-1);
+      if (e.key === 'ArrowRight') mover(1);
+    });
+  }
+</script>

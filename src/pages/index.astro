@@ -1,39 +1,229 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Nav from '../components/Nav.astro';
-import Hero from '../components/Hero.astro';
-import About from '../components/About.astro';
-import Skills from '../components/Skills.astro';
-import Projects from '../components/Projects.astro';
-import Experience from '../components/Experience.astro';
-import Contact from '../components/Contact.astro';
-import { perfil } from '../data/portfolio';
+import ProjectFigure from '../components/ProjectFigure.astro';
+import Lightbox from '../components/Lightbox.astro';
 ---
 
-<Layout title={`${perfil.nombre} — ${perfil.rol}`}>
-  <Nav />
-  <main>
-    <Hero />
-    <About />
-    <Skills />
-    <Projects />
-    <Experience />
-    <Contact />
+<Layout title="Jubert Goya — Desarrollador de software">
+  <div class="grain" aria-hidden="true"></div>
+
+  <header class="frame masthead">
+    <div class="mh-right">
+      <nav class="mh-nav" aria-label="Secciones">
+        <a href="#trabajo"><span class="es-only">Trabajo</span><span class="en-only">Work</span></a>
+        <a href="#experiencia"><span class="es-only">Experiencia</span><span class="en-only">Experience</span></a>
+        <a href="#herramientas"><span class="es-only">Herramientas</span><span class="en-only">Tools</span></a>
+        <a href="#contacto"><span class="es-only">Contacto</span><span class="en-only">Contact</span></a>
+      </nav>
+      <div class="langsw" role="group" aria-label="Idioma / Language">
+        <button type="button" data-lang="es" aria-pressed="true">ES</button>
+        <button type="button" data-lang="en" aria-pressed="false">EN</button>
+      </div>
+      <a class="mh-cv" href="#" aria-label="Descargar CV (PDF)"><span class="es-only">CV ↓</span><span class="en-only">Résumé ↓</span></a>
+    </div>
+  </header>
+
+  <main class="frame">
+
+    <section class="cover" aria-label="Portada">
+      <h1 class="hero-name">Jubert Goya</h1>
+      <p class="hero-role"><span class="es-only">Desarrollador <span class="dot">·</span> Full-Stack</span><span class="en-only">Developer <span class="dot">·</span> Full-Stack</span></p>
+      <div class="cover-grid">
+        <p class="lede">
+          <span class="es-only">Desarrollador backend y full-stack. Cuatro años diseñando e integrando servicios en Java, Spring y Python, con foco en la confiabilidad y el manejo de casos límite en entornos productivos.</span>
+          <span class="en-only">Backend and full-stack developer. Four years designing and integrating services in Java, Spring and Python, focused on reliability and handling edge cases in production.</span>
+        </p>
+        <div class="cover-meta">
+          <div class="meta-row">
+            <span class="meta-k"><span class="es-only">Ubicación</span><span class="en-only">Based in</span></span>
+            <span class="meta-v">Guayaquil, Ecuador</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-k"><span class="es-only">Estado</span><span class="en-only">Status</span></span>
+            <span class="meta-v avail"><span class="mark" aria-hidden="true"></span><span class="es-only">Abierto a proyectos</span><span class="en-only">Open to work</span></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec" id="trabajo">
+      <div class="sec-head">
+        <span class="sec-num">01</span>
+        <div>
+          <div class="sec-label"><span class="es-only">Proyectos Personales</span><span class="en-only">Selected work</span></div>
+          <p class="sec-note"><span class="es-only">Construidos de extremo a extremo: diseño, backend, interfaz e infraestructura.</span><span class="en-only">Two projects, start to production. Screenshots landing soon.</span></p>
+        </div>
+      </div>
+      <div class="work">
+        <article class="proj" data-reveal>
+          <div class="proj-body">
+            <span class="proj-idx">P/01</span>
+            <p class="proj-kind">Full-Stack · .NET + React</p>
+            <h3 class="proj-title">Plataforma de eventos sociales</h3>
+            <p class="proj-copy"><span class="es-only">Una red social para organizar actividades: eventos, perfiles, seguidores y chat en vivo. Backend en .NET con Clean Architecture y CQRS — cinco capas para que cambiar una cosa no rompa otras siete. El chat va por SignalR, en tiempo real de verdad.</span><span class="en-only">A social app for organizing activities: events, profiles, followers and live chat. .NET backend with Clean Architecture and CQRS — five layers so changing one thing doesn't break seven others. Chat runs over SignalR, in real time for real.</span></p>
+            <p class="proj-tech">C# · .NET 5 · Entity Framework · MediatR · SignalR · React · TypeScript · MobX</p>
+            <a class="proj-link" href="https://github.com/Jagr-ecu" target="_blank" rel="noopener"><span class="es-only">Ver repositorio</span><span class="en-only">View repository</span> <span class="arw">→</span></a>
+          </div>
+          <ProjectFigure slug="reactivities" fig="01" />
+        </article>
+
+        <article class="proj flip" data-reveal>
+          <div class="proj-body">
+            <span class="proj-idx">P/02</span>
+            <p class="proj-kind">Frontend + Serverless · E-commerce</p>
+            <h3 class="proj-title">Tienda en línea (e-commerce PWA)</h3>
+            <p class="proj-copy"><span class="es-only">Una tienda de ropa que cobra de verdad. Catálogo por categorías, carrito que sobrevive al refresco, login y pagos con Stripe desde una función serverless. Es PWA instalable y funciona sin señal, por si te da por comprar en el ascensor.</span><span class="en-only">A clothing store that actually charges cards. Categorized catalog, a cart that survives a refresh, login and Stripe payments from a serverless function. Installable PWA that works offline, in case you shop in an elevator.</span></p>
+            <p class="proj-tech">React · TypeScript · Redux-Saga · Firebase · Stripe · Styled-components · Netlify</p>
+            <a class="proj-link" href="https://github.com/Jagr-ecu" target="_blank" rel="noopener"><span class="es-only">Ver repositorio</span><span class="en-only">View repository</span> <span class="arw">→</span></a>
+          </div>
+          <ProjectFigure slug="clothes-store" fig="02" />
+        </article>
+      </div>
+    </section>
+
+    <section class="sec" id="experiencia">
+      <div class="sec-head">
+        <span class="sec-num">02</span>
+        <div>
+          <div class="sec-label"><span class="es-only">Experiencia</span><span class="en-only">Experience</span></div>
+        </div>
+      </div>
+      <div class="work-list">
+        <article class="xp" data-reveal>
+          <div class="xp-year">2022<br /><span class="es-only">— hoy</span><span class="en-only">— now</span></div>
+          <div>
+            <h3 class="xp-role"><span class="es-only">Desarrollador de Software</span><span class="en-only">Software Developer</span></h3>
+            <p class="xp-org">Consul.Ti · <span class="es-only">servicios para Telconet S.A. · Guayaquil</span><span class="en-only">services for Telconet S.A. · Guayaquil</span></p>
+            <ul class="xp-pts">
+              <li><span class="es-only">Analicé la migración a un nuevo sistema: compatibilidad tecnológica, riesgos y estrategia de transición.</span><span class="en-only">Assessed the migration to a new system: technical compatibility, risk and transition strategy.</span></li>
+              <li><span class="es-only">Construí módulos front-end en Angular y back-end en Spring/Java para la nueva arquitectura.</span><span class="en-only">Built Angular front-end and Spring/Java back-end modules for the new architecture.</span></li>
+              <li><span class="es-only">Diseñé APIs REST orientadas a recursos que reemplazaron los endpoints por acción del sistema anterior.</span><span class="en-only">Designed resource-oriented REST APIs replacing the old system's action-based endpoints.</span></li>
+              <li><span class="es-only">Desarrollé agentes de IA y supervisores con Python y LangGraph, aplicando Model Context Protocol (MCP).</span><span class="en-only">Built AI agents and supervisors with Python and LangGraph, applying the Model Context Protocol (MCP).</span></li>
+              <li><span class="es-only">Resolví incidencias en producción y di soporte a usuarios; menos llamadas a las 3 a.m.</span><span class="en-only">Resolved production incidents and supported users; fewer 3am calls.</span></li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="xp" data-reveal>
+          <div class="xp-year">2021<br />— 2022</div>
+          <div>
+            <h3 class="xp-role"><span class="es-only">Desarrollador de Aplicaciones</span><span class="en-only">Application Developer</span></h3>
+            <p class="xp-org">Viamatica · Guayaquil</p>
+            <ul class="xp-pts">
+              <li><span class="es-only">Desarrollé una app móvil de ventas en React Native: catálogo, carrito, descuentos, login y dashboards.</span><span class="en-only">Built a React Native sales app: catalog, cart, discounts, login and dashboards.</span></li>
+              <li><span class="es-only">Implementé almacenamiento local con react-native-mmkv para acceso offline a mucho dato.</span><span class="en-only">Implemented local storage with react-native-mmkv for offline access to a lot of data.</span></li>
+              <li><span class="es-only">Colaboré en SPAs con React para paneles de administración y añadí funcionalidades a APIs con Node.js.</span><span class="en-only">Worked on React SPAs for admin panels and added features to Node.js APIs.</span></li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="sec" id="herramientas">
+      <div class="sec-head">
+        <span class="sec-num">03</span>
+        <div>
+          <div class="sec-label"><span class="es-only">Caja de herramientas</span><span class="en-only">Toolbox</span></div>
+          <p class="sec-note"><span class="es-only">Agrupadas por dominio. Dentro de cada grupo, ordenadas por frecuencia de uso.</span><span class="en-only">Ordered by what I actually use, not what looks good on a résumé.</span></p>
+        </div>
+      </div>
+      <div class="tools" data-reveal>
+        <div class="tool">
+          <h3 class="tool-cat">Backend</h3>
+          <p class="tool-list"><b>Java / Spring Boot</b> · APIs RESTful · <span class="es-only">Microservicios</span><span class="en-only">Microservices</span> · Node.js (Express) · C# / .NET · PHP</p>
+        </div>
+        <div class="tool">
+          <h3 class="tool-cat">Frontend</h3>
+          <p class="tool-list"><b>TypeScript</b> · JavaScript · React · Angular · React Native · HTML/CSS · Sass</p>
+        </div>
+        <div class="tool">
+          <h3 class="tool-cat"><span class="es-only">Datos &amp; IA</span><span class="en-only">Data &amp; AI</span></h3>
+          <p class="tool-list"><b>Python</b> · LangGraph · <span class="es-only">Agentes de IA / MCP · Integración de sistemas</span><span class="en-only">AI agents / MCP · Systems integration</span></p>
+        </div>
+        <div class="tool">
+          <h3 class="tool-cat"><span class="es-only">Bases de datos</span><span class="en-only">Databases</span></h3>
+          <p class="tool-list"><b>SQL Server</b> · PL/SQL · MongoDB</p>
+        </div>
+        <div class="tool">
+          <h3 class="tool-cat">DevOps</h3>
+          <p class="tool-list"><b>Git</b> · Docker · CI/CD · Kubernetes</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec" id="contacto">
+      <div class="sec-head">
+        <span class="sec-num">04</span>
+        <div>
+          <div class="sec-label"><span class="es-only">Contacto</span><span class="en-only">Contact</span></div>
+        </div>
+      </div>
+      <div data-reveal>
+        <h2 class="contact-h">
+          <span class="es-only d-block">¿Tienes algo que construir o arreglar?</span>
+          <span class="en-only d-block">Got something to build or fix?</span>
+        </h2>
+        <p class="contact-sub"><span class="es-only">Abierto a oportunidades y colaboraciones. La vía más rápida es el correo.</span><span class="en-only">Write to me. I reply within a day — unless I'm mid-deploy.</span></p>
+        <dl class="contact-list">
+          <div class="contact-row">
+            <dt>Email</dt>
+            <dd><a href="mailto:jubert1999@gmail.com">jubert1999@gmail.com</a></dd>
+          </div>
+          <div class="contact-row">
+            <dt><span class="es-only">Teléfono</span><span class="en-only">Phone</span></dt>
+            <dd><a href="tel:+593991118803">+593 991118803</a></dd>
+          </div>
+          <div class="contact-row">
+            <dt>LinkedIn</dt>
+            <dd><a href="https://linkedin.com/in/jubert-goya-6b2662228" target="_blank" rel="noopener">in/jubert-goya</a></dd>
+          </div>
+          <div class="contact-row">
+            <dt>GitHub</dt>
+            <dd><a href="https://github.com/Jagr-ecu" target="_blank" rel="noopener">/Jagr-ecu</a></dd>
+          </div>
+          <div class="contact-row">
+            <dt>CV</dt>
+            <dd><a href="#"><span class="es-only">Descargar (PDF)</span><span class="en-only">Download (PDF)</span></a></dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <footer class="colophon">
+      <span>© 2026 Jubert Adrian Goya Romero</span>
+      <span><span class="es-only">Compuesto en Instrument Serif &amp; Geist. Sin plantillas, sin gradientes morados.</span><span class="en-only">Set in Instrument Serif &amp; Geist. No templates, no purple gradients.</span></span>
+    </footer>
+
   </main>
+
+  <Lightbox />
 </Layout>
 
 <script>
-  // Revela los elementos .reveal al entrar en pantalla
-  const obs = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((e) => {
-        if (e.isIntersecting) {
-          e.target.classList.add('visible');
-          obs.unobserve(e.target);
-        }
-      });
-    },
-    { threshold: 0.12 }
-  );
-  document.querySelectorAll('.reveal').forEach((el) => obs.observe(el));
+  (() => {
+    const html = document.documentElement;
+    html.classList.add('js');
+
+    // language toggle (progressive enhancement; ES is the no-JS default)
+    const setLang = (lang: string) => {
+      html.classList.toggle('lang-en', lang === 'en');
+      html.setAttribute('lang', lang);
+      document.querySelectorAll<HTMLElement>('.langsw button').forEach((b) =>
+        b.setAttribute('aria-pressed', String(b.dataset.lang === lang)));
+    };
+    document.querySelectorAll<HTMLElement>('.langsw button').forEach((b) =>
+      b.addEventListener('click', () => setLang(b.dataset.lang!)));
+
+    // subtle scroll reveal
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const items = document.querySelectorAll('[data-reveal]');
+    if (reduce || !('IntersectionObserver' in window)) {
+      items.forEach((el) => el.classList.add('in'));
+    } else {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+      }, { rootMargin: '0px 0px -12% 0px', threshold: 0.08 });
+      items.forEach((el) => io.observe(el));
+    }
+  })();
 </script>

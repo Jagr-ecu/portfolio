@@ -1,0 +1,125 @@
+---
+// Figura de un proyecto: portada + tira de miniaturas.
+// Sustituye al <image-slot> del diseño con las capturas reales de /public/proyectos.
+import { proyectos } from '../data/portfolio';
+
+interface Props {
+  slug: string;
+  fig: string; // número de figura que se imprime en el pie ("01", "02"…)
+}
+const { slug, fig } = Astro.props;
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const url = (src: string) => `${base}/${src}`;
+
+const imagenes = proyectos.find((p) => p.slug === slug)?.imagenes ?? [];
+const [portada, ...resto] = imagenes;
+---
+
+<figure class="proj-fig">
+  {
+    portada && (
+      <button class="fig-main" type="button" data-gallery={slug} data-index="0">
+        <img src={url(portada.src)} alt="" loading="lazy" decoding="async" />
+        <span class="sr-only">
+          <span class="es-only">Ampliar: {portada.caption}</span>
+          <span class="en-only">Enlarge: {portada.captionEn}</span>
+        </span>
+      </button>
+    )
+  }
+
+  <figcaption class="fig-cap">
+    Fig. {fig} — <span class="es-only">{portada?.caption}</span><span class="en-only"
+      >{portada?.captionEn}</span
+    >
+  </figcaption>
+
+  {
+    resto.length > 0 && (
+      <ul class="fig-thumbs">
+        {resto.map((img, i) => (
+          <li>
+            <button class="thumb" type="button" data-gallery={slug} data-index={i + 1}>
+              <img src={url(img.src)} alt="" loading="lazy" decoding="async" />
+              <span class="sr-only">
+                <span class="es-only">Ampliar: {img.caption}</span>
+                <span class="en-only">Enlarge: {img.captionEn}</span>
+              </span>
+            </button>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+</figure>
+
+<style>
+  .fig-main {
+    display: block;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    border: 1px solid var(--rule);
+    background: var(--paper-2);
+    cursor: zoom-in;
+    overflow: hidden;
+    transition: border-color 0.2s ease;
+  }
+  .fig-main img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1568 / 720;
+    object-fit: cover;
+    object-position: center top;
+    transition: transform 0.5s cubic-bezier(0.2, 0.6, 0.2, 1);
+  }
+  .fig-main:hover {
+    border-color: var(--accent);
+  }
+  .fig-main:hover img {
+    transform: scale(1.02);
+  }
+
+  .fig-thumbs {
+    list-style: none;
+    margin: 10px 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(84px, 1fr));
+    gap: 6px;
+  }
+  .thumb {
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: 1px solid var(--rule-soft);
+    background: var(--paper-2);
+    cursor: zoom-in;
+    overflow: hidden;
+    transition: border-color 0.2s ease, opacity 0.2s ease;
+    opacity: 0.82;
+  }
+  .thumb img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 2 / 1;
+    object-fit: cover;
+    object-position: center top;
+  }
+  .thumb:hover {
+    border-color: var(--accent);
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fig-main img,
+    .fig-main,
+    .thumb {
+      transition: none;
+    }
+    .fig-main:hover img {
+      transform: none;
+    }
+  }
+</style>
